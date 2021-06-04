@@ -1,0 +1,35 @@
+\chapter{Simulationsschaltungen}
+\begin{figure}[h]
+	\centering
+	\includesvg[inkscapelatex=false, width=\textwidth]{LTSpice/plots_schematics/sch_minimum_load}
+	\caption[Basisschaltung zu den Simulationen in \textsc{LTSpice}.]{Basisschaltung zu den Simulationen in \textsc{LTSpice}.}
+	\label{fig:minimum load simu schaltung}
+\end{figure}
+\newpage
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[]{.8\textwidth}
+		\centering
+		\includesvg[width=\linewidth]{LTSpice/2.4/spulenstrom_0.3A}
+		\caption{Verlauf des Spulenstroms \(I_L\) und des PWM Signals bei einem Laststrom von \SI{0,3}{A}.}
+		\label{subfig:no ringing}
+	\end{subfigure}
+	\vspace{3mm}
+	\begin{subfigure}[]{.8\textwidth}
+		\centering
+		\includesvg[width=\linewidth]{LTSpice/2.4/spulenstrom_ringing}
+		\caption{Verlauf des Spulenstroms \(I_L\) und des PWM Signals bei einem Laststrom von \SI{0,15}{A}.}
+		\label{subfig:vanilla ringing}
+	\end{subfigure}
+	\vspace{3mm}
+	\begin{subfigure}{.8\textwidth}
+		\centering
+		\includesvg[width=\linewidth]{LTSpice/2.4/spulenstrom_ringing_dampened}
+		\caption{Verlauf des Spulenstroms \(I_L\) und des PWM Signals bei einem Laststrom von \SI{0,15}{A} und einem der Spule parallel geschalteten Widerstand von
+		\SI{4,7}{k \ohm}.}
+		\label{subfig:dampened}
+	\end{subfigure}
+	\caption[Vergleich der Verläufe des Spulenstroms bei verschiedenen Lastströmen]{Vergleich der Verläufe des Spulenstroms bei verschiedenen Lastströmen und mit (\cref*{subfig:dampened}), bzw. ohne (\cref*{subfig:vanilla ringing}) Dämpfung.
+	Bei ausreichend geringer Last sind deutliche Oszillationen sowohl des Spulenstroms, als auch des treibenden Ausgangssignals zu beobachten.}
+	\label{fig:ringing}
+\end{figure}

@@ -1,0 +1,130 @@
+%ltex: language=de
+\chapter{Simulation}
+	\section{Ausgangsspannung}
+		Zu ermitteln ist einerseits der Peak des Überschwingens im Einschaltmoment der Schaltung nach \cref{fig:basisschaltung}.
+		Das Datenblatt gibt unter Kapitel 7.6 eine Ausgangsspannung von \(\SI{4,8}{V} \leq U_{out} \leq \SI{5,2}{V}\) bei einer Eingangsspannung von
+		zwischen \SI{7}{V} und \SI{40}{V}. Hier wurde der minimale, aus den Testbedingungen des Datenblattes zu entnehmende Laststrom von \SI{2}{mA}
+		gewählt.
+		\begin{figure}[h]
+			\centering
+			% \includegraphics[width=.8\textwidth]{LTSpice/figures/einschaltpeak.png}
+			\includesvg[width=.8\textwidth]{LTSpice/2.1/basis_schematic_LM2596_peak}
+			\caption[Spannungsspitze nach dem Einschalten]{Nach dem Einschalten steigt die Ausgangsspannung auf \(\approx \SI{6,5908}{V}\)
+			um sich nach etwa \SI{2,5}{ms} eingeschwungen zu haben.}
+			\label{fig:einschaltpeak}
+		\end{figure}
+		%
+		Um die mittlere Spannung im eingeschwungenen Zustand zu ermitteln, wurden die Simulationsanweisung dahingehend geändert, dass
+		nur Werte ab \SI{5}{ms} nach dem Einschalten aufgezeichnet werden. Daraus gibt das Simulationsprogramm eine mittlere
+		Spannung am Ausgang von \SI{4,9886}{V} an, was gut im vom Hersteller angegebenen Intervall liegt.
+		%
+	\newpage
+	\section{Restwelligkeit}
+		Ohne die Schaltung aus \cref{fig:basisschaltung} zu verändern wurde die Restwelligkeit der Ausgangsspannung bei
+		Lastströmen von \SI{0,2}{A} und bei \SI{3}{A} ermittelt. Hierzu wurde der Spannungsverlauf zwischen \SI{5}{ms} und \SI{10}{ms}
+		nach dem Einschaltmoment aufgetragen. \Cref{fig:ripple} zeigt einen Zoom auf das Zeitintervall \SI{(2-2,1)}{ms}.
+		Der Verlauf in Grün für einen Laststrom von \SI{0,2}{A} zeigt einen Spitze-Spitze-Wert von \(U_{pp} = \SI{0,05106}{V}\).
+		Die Ausgangsspannung vür einen Laststrom von \SI{3}{A} ist in Blau eingezeichnet. Hier ist ein Spitze-Spitze-Wert von \(U_{pp} = \SI{0,05891}{V}\)
+		abzulesen.
+		\begin{figure}[h]
+			\centering
+			% \includegraphics[width=.8\textwidth]{LTSpice/2.2/ripple_wf.jpg}
+			\includesvg[width=.8\textwidth]{LTSpice/2.2/restwelligkeit}
+			\caption[Restwelligkeit der Ausgangsspannung.]{Restwelligkeit der Ausgangsspannung bei \SI{0,2}{A} (solid) und \SI{3}{A} (gepunktet).}
+			\label{fig:ripple}
+		\end{figure}
+		%
+	\section{Schaltfrequenz}
+		Es soll die Periodendauer des pulsweitenmodulierten Signals am \textsf{Out}-Anschluss des \textit{LM2596} bei \SI{12}{V} Eingangsspannung ermittelt werden.
+		Wie in \cref{fig:schaltfrequenz 12V waveform} exemplarisch wurde hierzu die Cursor-Funktion im Waveform-Diagram der Simulation benutzt.
+		An zwei aufeinanderfolgenden steigenden Flanken des Ausgangssignals wurde jeweils ein Cursor angelegt und die entsprechenden Zeiten
+		\(t_2\) und \(t_1\) im zugehörigen Fenster abgelesen.
+		\begin{figure}[h]
+			\centering
+			\includesvg[width=.8\textwidth]{LTSpice/2.3/periodendauer_12V}
+			\caption[Ermittlung der Periodendauer des Ausgangssignals des \textit{LM2596}]{Ermittlung der Periodendauer des Ausgangssignals des \textit{LM2596} durch \(t_2 - t_1\) mit jeweils einem
+			Cursor an zwei aufeinander folgenden steigenden Flanken des Signals.}
+			\label{fig:schaltfrequenz 12V waveform}
+		\end{figure}
+		Hier ergeben sich eine Periodendauer und Frequenz des Oszillators zu
+		\begin{gather}
+			T = t_2 - t_1 = \SI{2,01}{ms} - \SI{2,0033}{ms} = \SI{6,7}{\micro s} \nonumber \\
+			\Leftrightarrow \nonumber \\
+			f = \frac{1}{T} \approx \SI{149,25}{kHz}
+		\end{gather}
+		Der Hersteller gibt hierzu einen typischen Wert von \(\SI{(150 \pm 23}{kHz}\) an (siehe \cref{fig:auszug kapitel 7.9}). Der in der Simulation
+		ermittelte Wert liegt ausreichend nah am erwarteten Wert. Da es sich bei der Diskrepanz um \(< \SI{0,1}{\micro s}\) handelt, lässt sich der Unterschied
+		durch Ungenauigkeiten bei der Platzierung der Cursor erklären.\par\medskip
+		Der Tastgrad des PWM-Signals ergibt sich mit
+		\begin{equation}
+			DC = \frac{t_{on}}{T} \cdot \SI{100}{\percent}
+		\end{equation}
+		zu etwa \SI{43}{\percent}.\par
+		Um zu untersuchen, wie sich eine Erhöhung der Eingangsspannung auf die Parameter Tastgrad und Periodendauer auswirken, wurde die gleiche Simulation
+		mit Eingangsspannungen von \SI{20}{V} und \SI{30}{V} durgchgeführt. Die Ergebnisse werden in \cref{tab:schaltfrequenzen} aufgeführt.
+		\begin{table}[h]
+			\centering
+			\caption[Tabelle mit für die Simulationsergebnisse bezüglich der Periodendauer und des Tastgrades]{Tabelle mit für die Simulationsergebnisse bezüglich der Periodendauer und des Tastgrades in Abhängigkeit der Höhe der Eingangsspannung.}
+			\begin{tabular}{@{}llllll@{}}
+				\toprule
+							&$t_1$				&$t_2$				&$T$				&$t_{on}$			&$DC$	\\
+				\midrule
+				\SI{12}{V}	&\SI{2,0033}{ms}	&\SI{2,0100}{ms}	&\SI{6,7}{\micro s}	&\SI{2,9}{\micro s}	&\SI{43}{\percent}	\\
+				\SI{20}{V}	&\SI{2,0043}{ms}	&\SI{2,0110}{ms}	&\SI{6,7}{\micro s}	&\SI{1,9}{\micro s}	&\SI{28}{\percent}	\\
+				\SI{30}{V}	&\SI{2,0034}{ms}	&\SI{2,0100}{ms}	&\SI{6,6}{\micro s}	&\SI{1,2}{\micro s}	&\SI{18}{\percent} \\
+				\bottomrule
+			\end{tabular}
+			\label{tab:schaltfrequenzen}
+		\end{table}
+		%
+	\section{Spulenstrom}
+		Untersucht werden soll das Verhalten des Spulenstroms bei Änderung der Last und dem damit einhergehenden Laststrom.
+		\begin{figure}[h]
+			\centering
+			\includesvg[width=.8\textwidth]{LTSpice/2.4/spulenstrom}
+			\caption[Zoom auf den Verlauf des Spulenstroms \(I_L\)]{Zoom auf den Verlauf des Spulenstroms \(I_L\) (grün) und der pulsweitenmodulierten Ausgangsspannung (blau) bei einem Laststrom von \SI{3}{A}. Die Welligkeit \(\Delta I_L\) beträgt
+			\SI{590,69}{mA} bei einem RMS von \SI{3,0053}{A} zwischen \SI{5}{ms} und \SI{10}{ms} nach dem Einschalten.}
+			\label{fig:spulenstrom}
+		\end{figure}%
+		Es wird eine Simulation mit der unveränderten Schaltung wie in \cref{fig:basisschaltung} dargestellt durchgeführt und der Spulenstrom
+		im Intervall von \SI{5}{ms} bis \SI{10}{ms} nach dem Einschalten aufgetragen.
+		\Cref{fig:spulenstrom} zeigt einen Zoom auf den
+		Zeitbereich zwischen \SI{7}{ms} und \SI{7,025}{ms}. Der Abstand zwischen den minimalen und maximalen Spitzenwerten entlang der Vertikalen 
+		gibt die Welligkeit \(\Delta I_L\) des Spulenstroms. Hier beträgt sie \SI{590,69}{mA} mit einem RMS im angegebenen Zeitintervall
+		von \SI{3,0053}{A}.\par
+		Reduktion des Laststromes auf \SI{1}{A} erhöht die Welligkeit des Spulenstroms auf \SI{603,91}{mA}. Der RMS beträgt hier im oben genannten Intervall
+		\SI{1,0156}{A}.\par\medskip
+		Weitere Reduktion des Laststroms wirkt sich kaum auf die Welligkeit des Spulenstroms aus. Allerdings kann sein absoluter Wert
+		so weit sinken, dass sein minimale Spitzenwert \SI{0}{A} erreicht. Simulationen zeigen, dass diese Situation bei \(\approx \SI{0.3}{A}\)
+		erreicht ist.\par
+		Wenn während des Betriebs Momentanwerte von \SI{0}{A} im Verlauf Spulenstroms existieren, wird dies \textit{Discontinuous Current Mode} genannt.
+		In diesen Bereichen können parasitäre Kapazitäten der Diode zusammen mit der Induktivität der Spule einen Schwingkreis erzeugen, dessen
+		Spitzenwerte in ungünstigen Fällen die Eingangsspannung übersteigen und so Teile der Schaltung zerstören können. Kapitel 8.4.1 des
+		Datenblattes folgend, kann dem entgegnet werden, indem einerseits die Induktivität der Spule entsprechend angepasst wird und/oder
+		indem mittels eines der Spule parallel geschalteten Widerstandes ungewollte Schwingungen gedämpft werden. In jedem Fall jedoch
+		sollte die Schaltung entsprechnd der erwarteten Lastströme dimensioniert werden.
+		%
+	\section{Maximaler Ausgangsstrom}
+		Das Datenblatt zum \textit{LM2596} gibt in Kapitel 7.9 unter \textit{Current Limit} einen maximalen Ausgangsstrom (typisch) von
+		\SI{4,5}{A} an (vgl. \cref{fig:auszug kapitel 7.9}). Um dies zu untersuchen wird die Schaltung mit \SI{0,1}{\ohm} belastet.
+		Rechnerisch wäre hier bei einer Ausgangsspannung von \(\approx \SI{5}{V}\) ein Strom von \(\approx \SI{50}{A}\) zu erwarten.
+		\begin{figure}[h]
+			\centering
+			\includesvg[width=.8\textwidth]{LTSpice/2.5/max_ausgangsstrom}
+			\caption[Maximaler Ausgangsstrom]{Verlauf des Ausgangsstroms der Schaltung und sein Maximalwert bei einer Last von \SI{0,1}{\ohm}.}
+			\label{fig:max ausgangsstrom}
+		\end{figure}
+		Die Simulation ergibt hier einen maximalen Wert von \SI{4,933}{A} bei einem RMS Wert zwischen \SI{5}{ms} und \SI{10}{ms} nach dem Einschalten von \SI{4.8594}{A}.
+		\Cref{fig:max ausgangsstrom} stellt den Verlauf des Stromes durch den Lastwiderstand dar. Zu Erkennen ist eine deutliche Verzerrung des Verlaufs
+		bei einer Überlagerung einer sekundärschwingung auf die Ausgangsspannung. Gleichzeitiges Auftragen des PWM-Signals zeigt, dass weder die Periodendauer des
+		internen Oszillators, noch der Tastgrad des PWM-Signals konstant sind.
+		%
+	\section{Wirkungsgrad des Netzteils}
+		Zur Beurteilung des Wirkungsgrades der Schaltung in \cref{fig:basisschaltung} wird die Simulation angewiesen, die abgegebene Leistung der Spannungsquelle, sowie
+		die aufgenommene Leistung der Last aufzutragen. Um Vergleichbarkeit zu gewährleisten, sollen die Simulationsparameter deckungsgleich mit den Testbedingungen des Datenblattes
+		unter Kapitel 7.6 (vgl. \cref{fig:auszug kapitel 7.6}) sein. Differenz der Mittelwerte beider Leistungen ergibt nach \cref{eq:wirkungsgrad} einen Wirkungsgrad von \(\approx \SI{90,7}{\percent}\).
+		\begin{align}
+			\eta = \frac{\bar{P}_out}{\bar{P}_in} \cdot \SI{100}{\percent} = \frac{\SI{14,963}{W}}{\SI{16,485}{W}} \cdot \SI{100}{\percent} \approx \SI{90,7}{\percent}
+			\label{eq:wirkungsgrad}
+		\end{align}%
+		Der simulierte Wert liegt deutlich über der Angabe des Datenblattes mit \SI{80}{\percent}.
