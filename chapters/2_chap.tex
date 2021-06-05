@@ -20,11 +20,11 @@
 		%
 	\newpage
 	\section{Restwelligkeit}
-		Ohne die Schaltung aus \cref{fig:basisschaltung} zu verändern wurde die Restwelligkeit der Ausgangsspannung bei
+		Ohne die Schaltung aus \cref{fig:basisschaltung} zu verändern, wurde die Restwelligkeit der Ausgangsspannung bei
 		Lastströmen von \SI{0,2}{A} und bei \SI{3}{A} ermittelt. Hierzu wurde der Spannungsverlauf zwischen \SI{5}{ms} und \SI{10}{ms}
-		nach dem Einschaltmoment aufgetragen. \Cref{fig:ripple} zeigt einen Zoom auf das Zeitintervall \SI{(2-2,1)}{ms}.
+		nach dem Einschaltmoment aufgetragen. \Cref{fig:ripple} zeigt einen Zoom auf das Zeitintervall \SI{2-2,1}{ms}.
 		Der Verlauf in Grün für einen Laststrom von \SI{0,2}{A} zeigt einen Spitze-Spitze-Wert von \(U_{pp} = \SI{0,05106}{V}\).
-		Die Ausgangsspannung vür einen Laststrom von \SI{3}{A} ist in Blau eingezeichnet. Hier ist ein Spitze-Spitze-Wert von \(U_{pp} = \SI{0,05891}{V}\)
+		Die Ausgangsspannung für einen Laststrom von \SI{3}{A} ist in Blau eingezeichnet. Hier ist ein Spitze-Spitze-Wert von \(U_{pp} = \SI{0,05891}{V}\)
 		abzulesen.
 		\begin{figure}[h]
 			\centering
@@ -36,7 +36,7 @@
 		%
 	\section{Schaltfrequenz}
 		Es soll die Periodendauer des pulsweitenmodulierten Signals am \textsf{Out}-Anschluss des \textit{LM2596} bei \SI{12}{V} Eingangsspannung ermittelt werden.
-		Wie in \cref{fig:schaltfrequenz 12V waveform} exemplarisch wurde hierzu die Cursor-Funktion im Waveform-Diagram der Simulation benutzt.
+		Wie in \cref{fig:schaltfrequenz 12V waveform} exemplarisch dargestellt, wurde hierzu die Cursor-Funktion im Waveform-Diagram der Simulation benutzt.
 		An zwei aufeinanderfolgenden steigenden Flanken des Ausgangssignals wurde jeweils ein Cursor angelegt und die entsprechenden Zeiten
 		\(t_2\) und \(t_1\) im zugehörigen Fenster abgelesen.
 		\begin{figure}[h]
@@ -52,7 +52,7 @@
 			\Leftrightarrow \nonumber \\
 			f = \frac{1}{T} \approx \SI{149,25}{kHz}
 		\end{gather}
-		Der Hersteller gibt hierzu einen typischen Wert von \(\SI{(150 \pm 23}{kHz}\) an (siehe \cref{fig:auszug kapitel 7.9}). Der in der Simulation
+		Der Hersteller gibt hierzu einen typischen Wert von \(\SI{(150 \pm 23)}{kHz}\) an (siehe \cref{fig:auszug kapitel 7.9}). Der in der Simulation
 		ermittelte Wert liegt ausreichend nah am erwarteten Wert. Da es sich bei der Diskrepanz um \(< \SI{0,1}{\micro s}\) handelt, lässt sich der Unterschied
 		durch Ungenauigkeiten bei der Platzierung der Cursor erklären.\par\medskip
 		Der Tastgrad des PWM-Signals ergibt sich mit
@@ -95,7 +95,7 @@
 		Reduktion des Laststromes auf \SI{1}{A} erhöht die Welligkeit des Spulenstroms auf \SI{603,91}{mA}. Der RMS beträgt hier im oben genannten Intervall
 		\SI{1,0156}{A}.\par\medskip
 		Weitere Reduktion des Laststroms wirkt sich kaum auf die Welligkeit des Spulenstroms aus. Allerdings kann sein absoluter Wert
-		so weit sinken, dass sein minimale Spitzenwert \SI{0}{A} erreicht. Simulationen zeigen, dass diese Situation bei \(\approx \SI{0.3}{A}\)
+		so weit sinken, dass sein minimaler Spitzenwert \SI{0}{A} erreicht. Simulationen zeigen, dass diese Situation bei \(\approx \SI{0.3}{A}\)
 		erreicht ist.\par
 		Wenn während des Betriebs Momentanwerte von \SI{0}{A} im Verlauf Spulenstroms existieren, wird dies \textit{Discontinuous Current Mode} genannt.
 		In diesen Bereichen können parasitäre Kapazitäten der Diode zusammen mit der Induktivität der Spule einen Schwingkreis erzeugen, dessen
@@ -115,12 +115,12 @@
 			\label{fig:max ausgangsstrom}
 		\end{figure}
 		Die Simulation ergibt hier einen maximalen Wert von \SI{4,933}{A} bei einem RMS Wert zwischen \SI{5}{ms} und \SI{10}{ms} nach dem Einschalten von \SI{4.8594}{A}.
-		\Cref{fig:max ausgangsstrom} stellt den Verlauf des Stromes durch den Lastwiderstand dar. Zu Erkennen ist eine deutliche Verzerrung des Verlaufs
-		bei einer Überlagerung einer sekundärschwingung auf die Ausgangsspannung. Gleichzeitiges Auftragen des PWM-Signals zeigt, dass weder die Periodendauer des
-		internen Oszillators, noch der Tastgrad des PWM-Signals konstant sind.
+		\Cref{fig:max ausgangsstrom} stellt den Verlauf des Stroms durch den Lastwiderstand dar. Zu Erkennen ist eine deutliche Verzerrung des Verlaufs
+		bei einer Überlagerung einer Sekundärschwingung auf die Ausgangsspannung. Gleichzeitiges Auftragen des PWM-Signals zeigt, dass weder die Periodendauer des
+		internen Oszillators noch der Tastgrad des PWM-Signals konstant sind.
 		%
 	\section{Wirkungsgrad des Netzteils}
-		Zur Beurteilung des Wirkungsgrades der Schaltung in \cref{fig:basisschaltung} wird die Simulation angewiesen, die abgegebene Leistung der Spannungsquelle, sowie
+		Zur Beurteilung des Wirkungsgrades der Schaltung in \cref{fig:basisschaltung} wird die Simulation angewiesen, die abgegebene Leistung der Spannungsquelle sowie
 		die aufgenommene Leistung der Last aufzutragen. Um Vergleichbarkeit zu gewährleisten, sollen die Simulationsparameter deckungsgleich mit den Testbedingungen des Datenblattes
 		unter Kapitel 7.6 (vgl. \cref{fig:auszug kapitel 7.6}) sein. Differenz der Mittelwerte beider Leistungen ergibt nach \cref{eq:wirkungsgrad} einen Wirkungsgrad von \(\approx \SI{90,7}{\percent}\).
 		\begin{align}
